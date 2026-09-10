@@ -315,26 +315,26 @@
         </div>
 
         <div class="cta__form-wrap reveal">
-          <form class="form" id="contatoForm" novalidate>
-            <h3 class="form__title">Solicitar Contato Especializado</h3>
-            <p class="form__subtitle">Insira seus dados abaixo e um dos nossos coordenadores clínicos entrará em contato em menos de 10 minutos de forma totalmente discreta.</p>
-            <label class="field">
-              <span class="field__label">Nome Completo</span>
-              <input type="text" name="nome" placeholder="Ex: José Silva" required />
-            </label>
-            <label class="field">
-              <span class="field__label">Telefone com DDD (WhatsApp)</span>
-              <input type="tel" name="telefone" placeholder="Ex: (11) 99999-9999" required />
-            </label>
-            <label class="field">
-              <span class="field__label">Mensagem / Observação</span>
-              <textarea name="mensagem" rows="4" placeholder="Descreva brevemente como podemos ajudar..."></textarea>
-            </label>
-            <button type="submit" class="btn btn--primary btn--block">
-              <svg class="icon" aria-hidden="true" viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
-              Enviar e Falar por WhatsApp
-            </button>
-          </form>
+          <div class="form">
+            <span class="form__icon">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38c1.45.79 3.08 1.21 4.79 1.21 5.46 0 9.91-4.45 9.91-9.91S17.5 2 12.04 2zm5.8 14.01c-.24.68-1.42 1.31-1.96 1.35-.5.05-.99.23-3.35-.7-2.82-1.11-4.6-3.99-4.74-4.18-.14-.19-1.13-1.5-1.13-2.86 0-1.36.71-2.03.96-2.31.25-.28.55-.35.73-.35.18 0 .37 0 .53.01.17.01.4-.06.62.48.24.58.81 2 .88 2.15.07.14.12.31.02.5-.09.19-.14.31-.28.48-.14.17-.29.37-.42.5-.14.14-.28.29-.12.57.16.28.71 1.17 1.53 1.9 1.05.94 1.94 1.23 2.22 1.37.28.14.44.12.6-.07.16-.19.69-.81.87-1.09.18-.28.37-.23.62-.14.25.09 1.6.75 1.87.89.28.14.46.21.53.32.07.12.07.68-.17 1.36z"/></svg>
+            </span>
+            <h3 class="form__title">Fale por WhatsApp Agora</h3>
+            <p class="form__subtitle">Converse em minutos com um coordenador clínico, com total discrição.</p>
+            <a href="#" class="btn btn--primary btn--block" data-whatsapp>
+              Iniciar Conversa
+            </a>
+            <ul class="form__info">
+              <li>
+                <svg class="icon" aria-hidden="true" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+                Resposta em até 10 minutos
+              </li>
+              <li>
+                <svg class="icon" aria-hidden="true" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                Conversa 100% confidencial
+              </li>
+            </ul>
+          </div>
         </div>
       </div>
     </section>
@@ -363,14 +363,6 @@
         <a href="#" data-whatsapp>WhatsApp: (54) 99981-9588</a>
       </div>
 
-      <div class="footer__col">
-        <h4 class="footer__heading">Selo de Qualidade</h4>
-        <div class="footer__seals">
-          <span class="seal">ANVISA</span>
-          <span class="seal">CRM-SP</span>
-        </div>
-        <p class="footer__note">Unidades registradas e auditadas em conformidade estrita com as regulamentações vigentes de saúde mental.</p>
-      </div>
     </div>
 
     <div class="container footer__bottom">

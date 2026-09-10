@@ -45,27 +45,6 @@ document.addEventListener("DOMContentLoaded", () => {
     })
   );
 
-  /* ---- Formulário → WhatsApp ---- */
-  const form = document.getElementById("contatoForm");
-  if (form) {
-    form.addEventListener("submit", (e) => {
-      e.preventDefault();
-      const nome = form.nome.value.trim();
-      const telefone = form.telefone.value.trim();
-      const mensagem = form.mensagem.value.trim();
-      if (!nome || !telefone) {
-        form.reportValidity();
-        return;
-      }
-      const texto =
-        `Olá! Meu nome é ${nome}.` +
-        `\nTelefone/WhatsApp: ${telefone}.` +
-        (mensagem ? `\nMensagem: ${mensagem}` : "") +
-        `\n\nGostaria de falar com um coordenador clínico da Recomeço à Vitória.`;
-      abrirWhatsApp(texto);
-    });
-  }
-
   /* ---- Reveal ao rolar (com stagger por grupo) ---- */
   const reveals = document.querySelectorAll(".reveal");
   reveals.forEach((el) => {
