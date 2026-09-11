@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://rebellatogui.github.io/recomecoVitoria/sitemap.xml

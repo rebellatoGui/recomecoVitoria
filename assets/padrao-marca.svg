@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 900" width="1440" height="900" fill="none">
+  <defs>
+    <linearGradient id="fundo" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#FBF8F2"/>
+      <stop offset="55%" stop-color="#F6F1E6"/>
+      <stop offset="100%" stop-color="#EFE8D9"/>
+    </linearGradient>
+    <radialGradient id="brilho" cx="0.82" cy="0.12" r="0.62">
+      <stop offset="0%" stop-color="#D4AF62" stop-opacity="0.20"/>
+      <stop offset="100%" stop-color="#D4AF62" stop-opacity="0"/>
+    </radialGradient>
+    <g id="folha">
+      <path d="M0 0 C 42 -10, 78 14, 86 58 C 44 70, 8 46, 0 0 Z" stroke="#1A3B22" stroke-opacity="0.13" stroke-width="2" fill="none"/>
+      <path d="M4 6 C 34 20, 58 38, 80 56" stroke="#1A3B22" stroke-opacity="0.09" stroke-width="1.6" fill="none" stroke-linecap="round"/>
+    </g>
+  </defs>
+
+  <rect width="1440" height="900" fill="url(#fundo)"/>
+  <rect width="1440" height="900" fill="url(#brilho)"/>
+
+  <g stroke="#1A3B22" stroke-opacity="0.10" stroke-width="2.4" stroke-linecap="round">
+    <path d="M980 236 A 220 220 0 0 1 1420 236" fill="none"/>
+    <path d="M1044 236 A 156 156 0 0 1 1356 236" fill="none" stroke-opacity="0.07"/>
+    <path d="M1200 -18 v 66"/>
+    <path d="M1104 0 l 22 62"/>
+    <path d="M1296 0 l -22 62"/>
+    <path d="M1016 48 l 38 54"/>
+    <path d="M1384 48 l -38 54"/>
+    <path d="M944 124 l 52 38"/>
+    <path d="M1456 124 l -52 38"/>
+  </g>
+
+  <g stroke="#1A3B22" stroke-opacity="0.075" stroke-width="2" fill="none" stroke-linecap="round">
+    <path d="M-60 700 C 260 620, 470 782, 780 690 S 1230 470, 1520 560"/>
+    <path d="M-60 802 C 300 740, 520 872, 860 780 S 1280 590, 1520 668"/>
+    <path d="M-40 430 C 180 372, 300 470, 470 424"/>
+  </g>
+  <path d="M-60 748 C 280 676, 496 830, 820 736 S 1256 528, 1520 614"
+        stroke="#D4AF62" stroke-opacity="0.28" stroke-width="1.6" fill="none" stroke-linecap="round"/>
+
+  <use href="#folha" transform="translate(112 168) rotate(-24) scale(1.5)"/>
+  <use href="#folha" transform="translate(318 92) rotate(36) scale(0.9)"/>
+  <use href="#folha" transform="translate(206 552) rotate(14) scale(1.15)"/>
+  <use href="#folha" transform="translate(640 240) rotate(-52) scale(0.8)"/>
+  <use href="#folha" transform="translate(1130 640) rotate(28) scale(1.35)"/>
+  <use href="#folha" transform="translate(878 806) rotate(-16) scale(1)"/>
+  <use href="#folha" transform="translate(1348 400) rotate(64) scale(1.1)"/>
+</svg>
