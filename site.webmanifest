@@ -1,0 +1,13 @@
+{
+  "name": "Recomeço à Vitória — Clínicas & Residenciais",
+  "short_name": "Recomeço à Vitória",
+  "lang": "pt-BR",
+  "start_url": "./",
+  "display": "browser",
+  "background_color": "#F6F8F5",
+  "theme_color": "#1A3B22",
+  "icons": [
+    { "src": "assets/favicon-180.png", "sizes": "180x180", "type": "image/png" },
+    { "src": "assets/favicon-512.png", "sizes": "512x512", "type": "image/png" }
+  ]
+}

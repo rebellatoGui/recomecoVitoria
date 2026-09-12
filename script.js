@@ -93,6 +93,39 @@ document.addEventListener("DOMContentLoaded", () => {
     sections.forEach((sec) => spy.observe(sec));
   }
 
+  /* ---- Carrossel da estrutura ---- */
+  const carrossel = document.querySelector(".carrossel");
+  if (carrossel) {
+    const trilho = carrossel.querySelector(".carrossel__trilho");
+    const slides = [...trilho.children];
+    const anterior = carrossel.querySelector('[data-carrossel="anterior"]');
+    const proximo = carrossel.querySelector('[data-carrossel="proximo"]');
+    const contador = carrossel.querySelector(".carrossel__contador strong");
+    const barra = carrossel.querySelector(".carrossel__progresso span");
+    const doisDigitos = (n) => String(n).padStart(2, "0");
+
+    const passo = () => slides[0].getBoundingClientRect().width + parseFloat(getComputedStyle(trilho).columnGap || 0);
+
+    const atualizar = () => {
+      const maximo = trilho.scrollWidth - trilho.clientWidth;
+      const progresso = maximo > 0 ? trilho.scrollLeft / maximo : 1;
+      contador.textContent = doisDigitos(Math.round(progresso * (slides.length - 1)) + 1);
+      barra.style.transform = `scaleX(${Math.max(1 / slides.length, progresso)})`;
+      anterior.disabled = trilho.scrollLeft < 4;
+      proximo.disabled = trilho.scrollLeft > maximo - 4;
+    };
+
+    anterior.addEventListener("click", () => trilho.scrollBy({ left: -passo() }));
+    proximo.addEventListener("click", () => trilho.scrollBy({ left: passo() }));
+    trilho.addEventListener("keydown", (e) => {
+      if (e.key === "ArrowRight") { e.preventDefault(); trilho.scrollBy({ left: passo() }); }
+      if (e.key === "ArrowLeft") { e.preventDefault(); trilho.scrollBy({ left: -passo() }); }
+    });
+    trilho.addEventListener("scroll", atualizar, { passive: true });
+    window.addEventListener("resize", atualizar);
+    atualizar();
+  }
+
   const counters = document.querySelectorAll("[data-count]");
   const runCounter = (el) => {
     const target = parseFloat(el.dataset.count) || 0;
@@ -424,21 +457,65 @@ document.addEventListener("DOMContentLoaded", () => {
           );
       }
 
-      /* ---- Parallax nas fotos da estrutura (desktop) ---- */
-      if (desktop) {
-        gsap.utils.toArray(".gallery__item").forEach((item) => {
-          const img = item.querySelector("img");
-          if (!img) return;
-          gsap.fromTo(
-            img,
-            { yPercent: -6 },
-            {
-              yPercent: 6,
-              ease: "none",
-              scrollTrigger: { trigger: item, start: "top bottom", end: "bottom top", scrub: 0.5 },
-            }
-          );
+      /* ---- Estrutura: bento ---- */
+      const itensBento = gsap.utils.toArray(".bento__item");
+      if (itensBento.length) {
+        const entradaBento = gsap.timeline({
+          defaults: { ease: "expo.out" },
+          scrollTrigger: { trigger: ".bento", start: "top 80%", once: true },
         });
+        itensBento.forEach((item, i) => {
+          const midia = item.querySelector(".bento__media");
+          const legenda = item.querySelector(".bento__legenda");
+          const conteudo = item.classList.contains("bento__widget") ? item.children : null;
+          const t = i * 0.14;
+          entradaBento.fromTo(item, { clipPath: "inset(100% 0% 0% 0% round 16px)" }, { clipPath: "inset(0% 0% 0% 0% round 16px)", duration: 1.3 }, t);
+          if (midia) entradaBento.fromTo(midia, { scale: 1.3 }, { scale: 1, duration: 1.8 }, t);
+          if (legenda) entradaBento.fromTo(legenda, { opacity: 0, y: 22 }, { opacity: 1, y: 0, duration: 0.9, ease: "power3.out" }, t + 0.5);
+          if (conteudo) entradaBento.fromTo(conteudo, { opacity: 0, y: 18 }, { opacity: 1, y: 0, duration: 0.8, stagger: 0.1, ease: "power3.out" }, t + 0.4);
+        });
+
+        if (desktop) {
+          gsap.utils.toArray(".bento__media").forEach((midia) => {
+            gsap.fromTo(
+              midia,
+              { yPercent: -5 },
+              {
+                yPercent: 5,
+                ease: "none",
+                scrollTrigger: { trigger: midia.parentElement, start: "top bottom", end: "bottom top", scrub: 0.6 },
+              }
+            );
+          });
+        }
+      }
+
+      /* ---- Estrutura: faixa de comodidades ---- */
+      const faixa = document.querySelector(".estrutura__faixa");
+      if (faixa) {
+        gsap.fromTo(
+          ".estrutura__faixa-fundo",
+          { yPercent: -10 },
+          {
+            yPercent: 10,
+            ease: "none",
+            scrollTrigger: { trigger: faixa, start: "top bottom", end: "bottom top", scrub: 0.6 },
+          }
+        );
+        gsap
+          .timeline({ scrollTrigger: { trigger: faixa, start: "top 72%", once: true } })
+          .fromTo(".estrutura__faixa-titulo", { opacity: 0, y: 26, filter: "blur(6px)" }, { opacity: 1, y: 0, filter: "blur(0px)", duration: 1 })
+          .fromTo(".comodidade", { opacity: 0, y: 36 }, { opacity: 1, y: 0, duration: 0.9, stagger: 0.09 }, 0.25)
+          .fromTo(".comodidade__icone", { scale: 0.4, rotate: -25 }, { scale: 1, rotate: 0, duration: 0.9, stagger: 0.09, ease: "back.out(2)" }, 0.4);
+      }
+
+      /* ---- Estrutura: carrossel ---- */
+      if (document.querySelector(".carrossel")) {
+        gsap
+          .timeline({ scrollTrigger: { trigger: ".carrossel", start: "top 80%", once: true } })
+          .fromTo(".carrossel__topo > *", { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.8, stagger: 0.1 })
+          .fromTo(".carrossel__slide", { opacity: 0, x: 80 }, { opacity: 1, x: 0, duration: 1.1, stagger: 0.1, ease: "expo.out" }, 0.15)
+          .fromTo(".carrossel__progresso", { opacity: 0 }, { opacity: 1, duration: 0.6 }, 0.6);
       }
 
       /* ---- Parallax do rodapé ---- */
@@ -446,7 +523,7 @@ document.addEventListener("DOMContentLoaded", () => {
       if (fundoRodape) {
         gsap.fromTo(
           fundoRodape,
-          { yPercent: -12 },
+          { yPercent: -8 },
           {
             yPercent: 8,
             ease: "none",

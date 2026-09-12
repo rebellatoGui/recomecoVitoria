@@ -1,9 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
   <url>
     <loc>https://rebellatogui.github.io/recomecoVitoria/</loc>
-    <lastmod>2026-09-11</lastmod>
+    <lastmod>2026-09-12</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
+    <image:image><image:loc>https://rebellatogui.github.io/recomecoVitoria/assets/estrutura-piscina.webp</image:loc></image:image>
+    <image:image><image:loc>https://rebellatogui.github.io/recomecoVitoria/assets/estrutura-fachada.webp</image:loc></image:image>
+    <image:image><image:loc>https://rebellatogui.github.io/recomecoVitoria/assets/estrutura-recreacao.webp</image:loc></image:image>
+    <image:image><image:loc>https://rebellatogui.github.io/recomecoVitoria/assets/estrutura-quarto.webp</image:loc></image:image>
+    <image:image><image:loc>https://rebellatogui.github.io/recomecoVitoria/assets/estrutura-refeitorio.webp</image:loc></image:image>
+    <image:image><image:loc>https://rebellatogui.github.io/recomecoVitoria/assets/estrutura-copa.webp</image:loc></image:image>
+    <image:image><image:loc>https://rebellatogui.github.io/recomecoVitoria/assets/estrutura-jardim.webp</image:loc></image:image>
+    <image:image><image:loc>https://rebellatogui.github.io/recomecoVitoria/assets/estrutura-palmeiras.webp</image:loc></image:image>
   </url>
 </urlset>
