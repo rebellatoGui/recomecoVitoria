@@ -16,4 +16,14 @@
     <image:image><image:loc>https://rebellatogui.github.io/recomecoVitoria/assets/estrutura-area-externa.webp</image:loc></image:image>
     <image:image><image:loc>https://rebellatogui.github.io/recomecoVitoria/assets/estrutura-varanda.webp</image:loc></image:image>
   </url>
+  <url>
+    <loc>https://rebellatogui.github.io/recomecoVitoria/parceiras.html</loc>
+    <lastmod>2026-09-27</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <image:image><image:loc>https://rebellatogui.github.io/recomecoVitoria/assets/parceiras/villa-grano/entrada-logo.webp</image:loc></image:image>
+    <image:image><image:loc>https://rebellatogui.github.io/recomecoVitoria/assets/parceiras/villa-grano/area-externa2.webp</image:loc></image:image>
+    <image:image><image:loc>https://rebellatogui.github.io/recomecoVitoria/assets/parceiras/villa-grano/quarto7.webp</image:loc></image:image>
+    <image:image><image:loc>https://rebellatogui.github.io/recomecoVitoria/assets/parceiras/villa-grano/refeitorio2.webp</image:loc></image:image>
+  </url>
 </urlset>
