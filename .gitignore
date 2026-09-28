@@ -8,10 +8,8 @@ desktop.ini
 .idea/
 *.swp
 
-# Ferramentas de sessão (não versionar)
-.remember/
-.playbook/
-.playwright-mcp/
+# Originais das clínicas parceiras (o site usa as versões .webp em assets/parceiras/)
+assets_clinicas_parceiras/
 
 # Temporários
 *.log
