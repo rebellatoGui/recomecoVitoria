@@ -1122,7 +1122,7 @@ body:not(.pagina-parceiras) .parceiras { background: linear-gradient(180deg, var
   .motivo:nth-child(3) { padding-left: 0; border-left: 0; }
   .motivo:nth-child(n+3) { border-top: 1px solid rgba(26, 59, 34, 0.12); margin-top: 8px; }
   .tratamentos__head { grid-template-columns: 1fr; gap: 36px; }
-  .tratamentos__arco { justify-self: start; max-width: 280px; }
+  .tratamentos__arco { justify-self: center; max-width: 280px; }
   .tratamentos__lista { grid-template-columns: 1fr; }
   .cta__inner { grid-template-columns: 1fr; gap: 36px; }
 }
