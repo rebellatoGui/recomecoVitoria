@@ -79,17 +79,19 @@ document.addEventListener("DOMContentLoaded", () => {
   const secaoParaLink = {
     hero: "#topo",
     estrutura: "#estrutura",
-    parceiras: "parceiras.html",
-    diferenciais: null,
+    parceiras: "#parceiras",
     sobre: null,
-    tratamentos: "#tratamentos",
-    jornada: "#tratamentos",
+    tratamentos: "#jornada",
+    jornada: "#jornada",
     equipe: "#equipe",
     depoimentos: null,
     duvidas: "#duvidas",
     contato: "#contato",
   };
-  const secoesMapeadas = Object.keys(secaoParaLink).map((id) => document.getElementById(id)).filter(Boolean);
+  const secoesMapeadas = Object.keys(secaoParaLink)
+    .map((id) => document.getElementById(id))
+    .filter(Boolean)
+    .sort((a, b) => (a.compareDocumentPosition(b) & Node.DOCUMENT_POSITION_FOLLOWING ? -1 : 1));
   if (secoesMapeadas.length && !document.body.classList.contains("pagina-parceiras")) {
     let pendente = false;
     const marcar = () => {
@@ -126,13 +128,16 @@ document.addEventListener("DOMContentLoaded", () => {
     let rodando = false;
 
     const medir = () => {
-      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      const telaPequena = window.innerWidth < 768;
+      const dpr = telaPequena ? 1 : Math.min(window.devicePixelRatio || 1, 2);
+      // No celular a barra de endereço dispara resize sem mudar o canvas; recriar tudo ali só custava quadros.
+      if (canvasNatureza.clientWidth === largura && canvasNatureza.clientHeight === altura) return;
       largura = canvasNatureza.clientWidth;
       altura = canvasNatureza.clientHeight;
       canvasNatureza.width = largura * dpr;
       canvasNatureza.height = altura * dpr;
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-      const quantidade = Math.round(Math.min(70, (largura * altura) / 26000));
+      const quantidade = Math.round(Math.min(telaPequena ? 24 : 70, (largura * altura) / 26000));
       particulas = Array.from({ length: quantidade }, () => ({
         x: Math.random() * largura,
         y: Math.random() * altura,
@@ -182,6 +187,34 @@ document.addEventListener("DOMContentLoaded", () => {
       }).observe(canvasNatureza);
     }
   }
+
+  // No celular o Gmail web pede login; mailto abre direto o app de e-mail do aparelho.
+  if (window.matchMedia("(hover: none)").matches) {
+    document.querySelectorAll(".btn--email").forEach((botao) => {
+      botao.href = "mailto:recomecoavitoria@gmail.com";
+      botao.removeAttribute("target");
+    });
+  }
+
+  // Rolagem suave via JS: scroll-behavior: smooth no CSS faz o ScrollTrigger medir errado a cada refresh.
+  document.addEventListener("click", (e) => {
+    const link = e.target.closest('a[href^="#"]');
+    if (!link || e.defaultPrevented) return;
+    const id = link.getAttribute("href");
+    if (id.length < 2) return;
+    // #topo é o header fixo: scrollIntoView não rola até ele, então vai para o y 0 e tira o hash da URL.
+    if (id === "#topo") {
+      e.preventDefault();
+      window.scrollTo({ top: 0, behavior: reduceMotion ? "auto" : "smooth" });
+      history.replaceState(null, "", location.pathname + location.search);
+      return;
+    }
+    const alvo = document.querySelector(id);
+    if (!alvo) return;
+    e.preventDefault();
+    alvo.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth", block: "start" });
+    history.pushState(null, "", id);
+  });
 
   /* ---- Vitrine da estrutura ---- */
   const vitrine = document.querySelector("[data-vitrine]");
@@ -400,7 +433,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const heroTitulo = document.querySelector(".hero__title");
   const linhasHero = dividirEmLinhas(heroTitulo);
-  const titulosSecao = [...document.querySelectorAll(".section__title")];
+  const titulosSecao = [...document.querySelectorAll(".section__title:not(.estrutura__titulo)")];
   const linhasSecao = titulosSecao.map(dividirEmLinhas);
 
   gsap.matchMedia().add(
@@ -456,21 +489,19 @@ document.addEventListener("DOMContentLoaded", () => {
           .set(".hero__title", { opacity: 1 }, 0.48)
           .fromTo(".hero__actions .btn", { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.9, stagger: 0.1 }, 0.62)
           .set(".hero__actions", { opacity: 1 }, 0.62)
+          .fromTo(".hero__link", { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.8 }, 0.74)
           .fromTo(".hero__support", { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.8 }, 0.8)
           .fromTo(".hero__text", { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 1 }, 0.88);
 
         /* ---- Vida contínua ---- */
-        gsap.to(marca, { scale: 1.045, duration: 9, ease: "sine.inOut", repeat: -1, yoyo: true, delay: 2.2 });
-        gsap.to(marca, { opacity: 0.2, duration: 6.5, ease: "sine.inOut", repeat: -1, yoyo: true, delay: 2.6 });
-        gsap.to(".hero__glow", { opacity: 0.72, duration: 5.5, ease: "sine.inOut", repeat: -1, yoyo: true, delay: 2.4 });
-        gsap.to(".hero__grain", {
-          x: "+=14",
-          y: "+=10",
-          duration: 0.5,
-          ease: "steps(3)",
-          repeat: -1,
-          yoyo: true,
-        });
+        const loopsHero = [
+          gsap.to(marca, { scale: 1.045, duration: 9, ease: "sine.inOut", repeat: -1, yoyo: true, delay: 2.2 }),
+          gsap.to(marca, { opacity: 0.2, duration: 6.5, ease: "sine.inOut", repeat: -1, yoyo: true, delay: 2.6 }),
+          gsap.to(".hero__glow", { opacity: 0.72, duration: 5.5, ease: "sine.inOut", repeat: -1, yoyo: true, delay: 2.4 }),
+        ];
+        if (desktop) {
+          loopsHero.push(gsap.to(".hero__grain", { x: "+=14", y: "+=10", duration: 0.5, ease: "steps(3)", repeat: -1, yoyo: true }));
+        }
 
         /* ---- Partículas de luz (desktop) ---- */
         const campo = document.querySelector(".hero__particles");
@@ -490,7 +521,7 @@ document.addEventListener("DOMContentLoaded", () => {
             campo.appendChild(p);
 
             gsap.to(p, { opacity: gsap.utils.random(0.25, 0.7), duration: 2, delay: 1.2 + i * 0.09 });
-            gsap.to(p, {
+            loopsHero.push(gsap.to(p, {
               y: gsap.utils.random(-90, -34),
               x: gsap.utils.random(-26, 26),
               duration: gsap.utils.random(9, 17),
@@ -498,9 +529,17 @@ document.addEventListener("DOMContentLoaded", () => {
               repeat: -1,
               yoyo: true,
               delay: i * 0.25,
-            });
+            }));
           }
         }
+
+        // Loops infinitos continuam gastando GPU fora da tela; pausam quando o hero sai de vista.
+        ScrollTrigger.create({
+          trigger: ".hero",
+          start: "top bottom",
+          end: "bottom top",
+          onToggle: (self) => loopsHero.forEach((t) => (self.isActive ? t.resume() : t.pause())),
+        });
 
         /* ---- Hero em camadas na rolagem ---- */
         gsap
@@ -513,7 +552,7 @@ document.addEventListener("DOMContentLoaded", () => {
               invalidateOnRefresh: true,
             },
           })
-          .to(".hero__bg", { yPercent: 16, scale: 1.1, ease: "none" }, 0)
+          .to(".hero__bg", { yPercent: 16, ease: "none" }, 0)
           .to(".hero__glow", { yPercent: 26, ease: "none" }, 0)
           .to(".hero__strokes", { yPercent: 34, opacity: 0.25, ease: "none" }, 0)
           .to(".hero__particles", { yPercent: 46, opacity: 0, ease: "none" }, 0)
@@ -556,7 +595,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
         desenharTrilha();
 
-        gsap.fromTo(
+        if (!desktop) {
+          brilho.style.display = "none";
+          ScrollTrigger.create({ trigger: trilha, start: "top bottom", onRefresh: desenharTrilha });
+        } else gsap.fromTo(
           brilho,
           { strokeDashoffset: () => brilho.getTotalLength() },
           {
@@ -591,7 +633,7 @@ document.addEventListener("DOMContentLoaded", () => {
       });
 
       /* ---- Reveals em cascata ---- */
-      const reveals = [...document.querySelectorAll(".reveal")].filter((el) => !el.classList.contains("sobre__media"));
+      const reveals = [...document.querySelectorAll(".reveal")];
       gsap.set(reveals, { opacity: 0, y: 34 });
       ScrollTrigger.batch(reveals, {
         start: "top 88%",
@@ -629,38 +671,45 @@ document.addEventListener("DOMContentLoaded", () => {
         })
       );
 
-      /* ---- Revelação da foto do Sobre ---- */
-      const midiaSobre = document.querySelector(".sobre__media");
-      if (midiaSobre) {
-        const foto = midiaSobre.querySelector(".sobre__foto");
-        const imagem = midiaSobre.querySelector("img");
-        const moldura = midiaSobre.querySelector(".sobre__moldura");
+      /* ---- Nossa história: polaroides se abrem em leque ---- */
+      const fotosHistoria = document.querySelector(".historia__fotos");
+      if (fotosHistoria) {
+        const leque = gsap.timeline({
+          scrollTrigger: desktop
+            ? { trigger: fotosHistoria, start: "top 85%", end: "center 45%", scrub: 0.8 }
+            : { trigger: fotosHistoria, start: "top 80%", once: true },
+        });
+        leque
+          .fromTo(".polaroid--a", { rotate: 0, xPercent: 16, yPercent: 10 }, { rotate: -5, xPercent: 0, yPercent: 0, ease: "power2.out", duration: 1 }, 0)
+          .fromTo(".polaroid--b", { rotate: 0, xPercent: -18, yPercent: -12, opacity: 0 }, { rotate: 6, xPercent: 0, yPercent: 0, opacity: 1, ease: "power2.out", duration: 1 }, 0);
+      }
 
-        gsap
-          .timeline({
-            defaults: { ease: "expo.out" },
-            scrollTrigger: { trigger: midiaSobre, start: "top 78%", once: true },
-          })
-          .fromTo(
-            foto,
-            { clipPath: "inset(100% 0% 0% 0%)" },
-            { clipPath: "inset(0% 0% 0% 0%)", duration: 1.4 }
-          )
-          .fromTo(imagem, { yPercent: 16, scale: 1.08 }, { yPercent: 0, scale: 1, duration: 1.6 }, 0)
-          .fromTo(
-            moldura,
-            { x: 34, y: 34, opacity: 0 },
-            { x: 20, y: 20, opacity: 1, duration: 1.2 },
-            0.35
-          );
+      /* ---- Motivos: ícones se desenham ---- */
+      gsap.utils.toArray(".motivo__icone .icon").forEach((icone) => {
+        const tracos = icone.querySelectorAll("path, circle");
+        tracos.forEach((t) => {
+          const total = t.getTotalLength();
+          gsap.set(t, { strokeDasharray: total, strokeDashoffset: total });
+        });
+        gsap.to(tracos, { strokeDashoffset: 0, duration: 1.4, ease: "power2.inOut", stagger: 0.12, scrollTrigger: { trigger: icone, start: "top 88%", once: true } });
+      });
+
+      /* ---- Tratamentos: a folha sobe sobre a história ---- */
+      if (desktop && document.querySelector(".tratamentos")) {
+        gsap.fromTo(
+          ".tratamentos",
+          { scale: 0.94, borderRadius: "120px 120px 0 0" },
+          { scale: 1, borderRadius: "64px 64px 0 0", ease: "none", scrollTrigger: { trigger: ".tratamentos", start: "top bottom", end: "top 30%", scrub: 0.6 } }
+        );
+        gsap.fromTo(".tratamentos__arco img", { yPercent: -8, scale: 1.15 }, { yPercent: 8, scale: 1.15, ease: "none", scrollTrigger: { trigger: ".tratamentos__arco", start: "top bottom", end: "bottom top", scrub: 0.6 } });
       }
 
       /* ---- Estrutura: vitrine ---- */
       if (vitrine) {
         gsap
           .timeline({ defaults: { ease: "expo.out" }, scrollTrigger: { trigger: vitrine, start: "top 78%", once: true } })
-          .fromTo(vitrine, { clipPath: "inset(10% 5% 0% 5% round 28px)" }, { clipPath: "inset(0% 0% 0% 0% round 28px)", duration: 1.5 })
-          .fromTo(".vitrine__palco", { scale: 1.12 }, { scale: 1, duration: 2 }, 0)
+          .fromTo(".vitrine__palco", { clipPath: "inset(12% 8% 0% 0% round 28px)" }, { clipPath: "inset(0% 0% 0% 0% round 28px)", duration: 1.5, clearProps: "clipPath" })
+          .fromTo(".vitrine__foto.is-ativa", { scale: 1.14 }, { scale: 1, duration: 2, clearProps: "transform" }, 0)
           .fromTo(".vitrine__info > *", { opacity: 0, y: 28 }, { opacity: 1, y: 0, duration: 1, stagger: 0.08, ease: "power3.out" }, 0.35)
           .fromTo(".vitrine__miniaturas li", { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.8, stagger: 0.05, ease: "power3.out" }, 0.6);
       }
@@ -675,18 +724,33 @@ document.addEventListener("DOMContentLoaded", () => {
 
         if (desktop && window.innerWidth > 860) {
           let ativo = 0;
+          const numero = jornada.querySelector(".jornada__numero");
+          // Amanhecer: o sol sobe e esquenta conforme as etapas avançam; o progresso vem do próprio pin.
+          const amanhecer = gsap
+            .timeline({ paused: true, defaults: { ease: "none" } })
+            .to(".jornada__aurora", { opacity: 1, yPercent: -18, scale: 1.25 }, 0)
+            .to(".jornada__raios", { opacity: 0.9, rotate: 48, scale: 1.08 }, 0)
+            .to(".jornada__folhas", { yPercent: -8 }, 0)
+            .fromTo(numero, { yPercent: 6 }, { yPercent: -6 }, 0);
           ScrollTrigger.create({
             trigger: jornada,
-            start: "top top+=" + (document.querySelector(".header").offsetHeight || 0),
+            // O header encolhe ao rolar; o pin usa a altura compacta, que é a que está visível durante a jornada.
+            start: () => "top top+=" + (parseFloat(getComputedStyle(document.documentElement).getPropertyValue("--header-h-compacto")) + 1),
             end: "+=" + cartoes.length * 70 + "%",
             pin: true,
             scrub: true,
+            anticipatePin: 1,
+            refreshPriority: 1,
             onUpdate: (self) => {
               anel.style.strokeDashoffset = circunferencia * (1 - self.progress);
+              amanhecer.progress(self.progress);
               const indice = Math.min(cartoes.length - 1, Math.floor(self.progress * cartoes.length));
               if (indice === ativo) return;
               ativo = indice;
               cartoes.forEach((c, i) => c.classList.toggle("is-ativo", i === indice));
+              gsap.timeline()
+                .to(numero, { opacity: 0, duration: 0.2, ease: "power2.in", onComplete: () => (numero.textContent = String(indice + 1).padStart(2, "0")) })
+                .to(numero, { opacity: 1, duration: 0.5, ease: "power2.out" });
               passos.forEach((p, i) => {
                 p.classList.toggle("is-ativo", i === indice);
                 p.classList.toggle("is-feito", i < indice);
@@ -722,30 +786,24 @@ document.addEventListener("DOMContentLoaded", () => {
       const parceira = document.querySelector(".parceira");
       if (parceira) {
         const info = parceira.querySelectorAll(".parceira__info > *");
-        gsap
+        const resumo = parceira.classList.contains("parceira--resumo");
+        const entrada = gsap
           .timeline({ defaults: { ease: "expo.out" }, scrollTrigger: { trigger: parceira, start: "top 78%", once: true } })
           .fromTo(parceira, { clipPath: "inset(12% 6% 0% 6% round 24px)" }, { clipPath: "inset(0% 0% 0% 0% round 24px)", duration: 1.5 })
-          .fromTo(".parceira__capa img", { scale: 1.25 }, { scale: 1, duration: 2 }, 0)
           .fromTo(".parceira__local", { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.9 }, 0.7)
-          .fromTo(info, { opacity: 0, y: 28 }, { opacity: 1, y: 0, duration: 1, stagger: 0.08, ease: "power3.out" }, 0.35)
-          .fromTo(".parceira__avatar", { scale: 0.4, rotate: -30 }, { scale: 1, rotate: 0, duration: 0.9, ease: "back.out(2)" }, 0.9);
+          .fromTo(info, { opacity: 0, y: 28 }, { opacity: 1, y: 0, duration: 1, stagger: 0.08, ease: "power3.out" }, 0.35);
+        if (!resumo) entrada.fromTo(".parceira__capa img", { scale: 1.25 }, { scale: 1, duration: 2 }, 0);
+        if (parceira.querySelector(".parceira__avatar")) {
+          entrada.fromTo(".parceira__avatar", { scale: 0.4, rotate: -30 }, { scale: 1, rotate: 0, duration: 0.9, ease: "back.out(2)" }, 0.9);
+        }
 
-        if (desktop) {
+        if (desktop && !resumo) {
           gsap.fromTo(
             ".parceira__capa img",
             { yPercent: -4 },
             { yPercent: 4, ease: "none", scrollTrigger: { trigger: ".parceira__destaque", start: "top bottom", end: "bottom top", scrub: 0.6 } }
           );
         }
-      }
-
-      const posts = document.querySelector(".parceira-posts");
-      if (posts) {
-        gsap
-          .timeline({ defaults: { ease: "expo.out" }, scrollTrigger: { trigger: posts, start: "top 82%", once: true } })
-          .fromTo(".parceira-post", { clipPath: "inset(100% 0% 0% 0% round 20px)" }, { clipPath: "inset(0% 0% 0% 0% round 20px)", duration: 1.3, stagger: 0.16 })
-          .fromTo(".parceira-post img", { scale: 1.25 }, { scale: 1, duration: 1.8, stagger: 0.16, clearProps: "transform" }, 0)
-          .fromTo(".parceira-convite > *", { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.9, stagger: 0.08, ease: "power3.out" }, 0.25);
       }
 
       /* ---- Página de parceiras ---- */
