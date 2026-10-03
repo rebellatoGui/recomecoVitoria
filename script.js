@@ -736,7 +736,7 @@ document.addEventListener("DOMContentLoaded", () => {
             trigger: jornada,
             // O header encolhe ao rolar; o pin usa a altura compacta, que é a que está visível durante a jornada.
             start: () => "top top+=" + (parseFloat(getComputedStyle(document.documentElement).getPropertyValue("--header-h-compacto")) + 1),
-            end: "+=" + cartoes.length * 70 + "%",
+            end: "+=" + cartoes.length * 130 + "%",
             pin: true,
             scrub: true,
             anticipatePin: 1,
@@ -793,9 +793,6 @@ document.addEventListener("DOMContentLoaded", () => {
           .fromTo(".parceira__local", { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.9 }, 0.7)
           .fromTo(info, { opacity: 0, y: 28 }, { opacity: 1, y: 0, duration: 1, stagger: 0.08, ease: "power3.out" }, 0.35);
         if (!resumo) entrada.fromTo(".parceira__capa img", { scale: 1.25 }, { scale: 1, duration: 2 }, 0);
-        if (parceira.querySelector(".parceira__avatar")) {
-          entrada.fromTo(".parceira__avatar", { scale: 0.4, rotate: -30 }, { scale: 1, rotate: 0, duration: 0.9, ease: "back.out(2)" }, 0.9);
-        }
 
         if (desktop && !resumo) {
           gsap.fromTo(

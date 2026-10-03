@@ -590,7 +590,7 @@ body:not(.pagina-parceiras) .parceiras { background: linear-gradient(180deg, var
 .parceira__local .icon { width: 15px; height: 15px; color: var(--agua); }
 
 .parceira__info {
-  padding: 56px 56px 52px; display: flex; flex-direction: column; align-items: flex-start;
+  padding: 56px 56px 52px; display: flex; flex-direction: column; align-items: flex-start; justify-content: center;
   background:
     radial-gradient(70% 60% at 100% 0%, rgba(63, 199, 166, 0.16) 0%, rgba(63, 199, 166, 0) 70%),
     radial-gradient(70% 60% at 70% 100%, rgba(40, 72, 150, 0.35) 0%, rgba(40, 72, 150, 0) 70%);
@@ -612,29 +612,13 @@ body:not(.pagina-parceiras) .parceiras { background: linear-gradient(180deg, var
 }
 .parceira__texto { margin: 0 0 30px; font-size: 0.98rem; max-width: 520px; }
 
-.parceira__responsavel {
-  display: flex; align-items: center; gap: 16px; width: 100%;
-  padding: 18px 20px; margin-bottom: 22px; border-radius: var(--radius);
-  background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1);
-}
-.parceira__avatar {
-  flex-shrink: 0; width: 58px; height: 58px; border-radius: 50%;
-  object-fit: cover; box-shadow: 0 0 0 2px var(--marinho-fundo), 0 0 0 4px var(--agua);
-}
-.parceira__resp-nome { margin: 0; font-family: var(--font-serif); font-weight: 600; font-size: 1.12rem; color: #fff; }
-.parceira__resp-cargo { margin: 2px 0 0; font-size: 0.88rem; }
-.parceira__resp-cargo span { color: var(--agua); font-weight: 700; letter-spacing: 0.03em; }
-
-.parceira__dados { list-style: none; margin: 0 0 30px; padding: 0; display: flex; flex-direction: column; gap: 10px; }
+.parceira__dados { list-style: none; margin: 0; padding: 24px 0 0; width: 100%; max-width: 520px; border-top: 1px solid rgba(255, 255, 255, 0.12); display: flex; flex-direction: column; gap: 10px; }
 .parceira__dados li { display: flex; align-items: center; gap: 12px; font-size: 0.95rem; }
 .parceira__dados .icon { color: var(--agua); }
 .parceira__dados a { transition: color 0.25s ease; }
 .parceira__dados a:hover { color: #fff; text-decoration: underline; text-underline-offset: 3px; }
 
 .parceira__acoes { display: flex; flex-wrap: wrap; gap: 12px; margin-top: auto; }
-.parceira__btn { background: #25D366; color: #fff; box-shadow: 0 10px 26px rgba(37, 211, 102, 0.3); }
-.parceira__btn:hover { background: #1EBE5A; }
-.parceira__wa { width: 20px; height: 20px; fill: currentColor; flex-shrink: 0; }
 .parceira a:focus-visible, .parceira button:focus-visible { outline: 2px solid var(--agua); outline-offset: 3px; }
 
 .parceira--resumo {
@@ -816,7 +800,7 @@ body:not(.pagina-parceiras) .parceiras { background: linear-gradient(180deg, var
 .jornada__passos::before {
   content: ""; position: absolute; left: 21px; top: 22px; bottom: 22px; width: 1px; background: rgba(255, 255, 255, 0.15);
 }
-.jornada__passo { position: relative; display: flex; align-items: center; gap: 20px; padding: 12px 0; opacity: 0.45; transition: opacity 0.5s ease; }
+.jornada__passo { position: relative; display: flex; align-items: center; gap: 20px; padding: 12px 0; opacity: 0.45; transition: opacity 0.8s ease; }
 .jornada__passo.is-ativo, .jornada__passo.is-feito { opacity: 1; }
 .jornada__num {
   position: relative; z-index: 1; flex-shrink: 0;
@@ -840,9 +824,9 @@ body:not(.pagina-parceiras) .parceiras { background: linear-gradient(180deg, var
   grid-area: 1 / 1; width: 72%; text-align: center;
   display: flex; flex-direction: column; align-items: center;
   opacity: 0; visibility: hidden; transform: translateY(24px) scale(0.96);
-  transition: opacity 0.6s ease, transform 0.8s cubic-bezier(0.22, 1, 0.36, 1), visibility 0.6s;
+  transition: opacity 0.7s ease, transform 1s cubic-bezier(0.22, 1, 0.36, 1), visibility 0.7s;
 }
-.jornada__cartao.is-ativo { opacity: 1; visibility: visible; transform: none; }
+.jornada__cartao.is-ativo { opacity: 1; visibility: visible; transform: none; transition-delay: 0.35s; }
 .jornada__icone {
   display: inline-flex; align-items: center; justify-content: center;
   width: 64px; height: 64px; border-radius: 20px; margin-bottom: 20px;
