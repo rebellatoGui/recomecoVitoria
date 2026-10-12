@@ -783,25 +783,26 @@ document.addEventListener("DOMContentLoaded", () => {
       }
 
       /* ---- Clínicas parceiras ---- */
-      const parceira = document.querySelector(".parceira");
-      if (parceira) {
+      document.querySelectorAll(".parceira").forEach((parceira) => {
         const info = parceira.querySelectorAll(".parceira__info > *");
+        const local = parceira.querySelector(".parceira__local");
+        const capa = parceira.querySelector(".parceira__capa img");
         const resumo = parceira.classList.contains("parceira--resumo");
         const entrada = gsap
           .timeline({ defaults: { ease: "expo.out" }, scrollTrigger: { trigger: parceira, start: "top 78%", once: true } })
           .fromTo(parceira, { clipPath: "inset(12% 6% 0% 6% round 24px)" }, { clipPath: "inset(0% 0% 0% 0% round 24px)", duration: 1.5 })
-          .fromTo(".parceira__local", { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.9 }, 0.7)
+          .fromTo(local, { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.9 }, 0.7)
           .fromTo(info, { opacity: 0, y: 28 }, { opacity: 1, y: 0, duration: 1, stagger: 0.08, ease: "power3.out" }, 0.35);
-        if (!resumo) entrada.fromTo(".parceira__capa img", { scale: 1.25 }, { scale: 1, duration: 2 }, 0);
+        if (!resumo) entrada.fromTo(capa, { scale: 1.25 }, { scale: 1, duration: 2 }, 0);
 
         if (desktop && !resumo) {
           gsap.fromTo(
-            ".parceira__capa img",
+            capa,
             { yPercent: -4 },
-            { yPercent: 4, ease: "none", scrollTrigger: { trigger: ".parceira__destaque", start: "top bottom", end: "bottom top", scrub: 0.6 } }
+            { yPercent: 4, ease: "none", scrollTrigger: { trigger: parceira.querySelector(".parceira__destaque"), start: "top bottom", end: "bottom top", scrub: 0.6 } }
           );
         }
-      }
+      });
 
       /* ---- Página de parceiras ---- */
       if (document.querySelector(".pagina-topo")) {

@@ -10,7 +10,7 @@ Site institucional da Clínica Recomeço à Vitória.
 </p>
 
 <p align="center">
-  <img alt="Capa Recomeço à Vitória" src="readme-preview.png" style="border-radius: 10px;">
+  <img alt="Capa Recomeço à Vitória" src="assets/readme-preview.png" style="border-radius: 10px;">
 <br>
 
 ## 🚀 Tecnologias

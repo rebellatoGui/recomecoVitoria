@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Recomeço à Vitória | Clínica de Reabilitação</title>
-  <meta name="description" content="Clínica de recuperação no RS para dependência química e alcoolismo. Internação voluntária e involuntária, equipe multidisciplinar, estrutura em meio à natureza, atendimento 24h e sigilo absoluto." />
+  <meta name="description" content="Clínica de recuperação no RS para dependência química e alcoolismo. Internação voluntária e involuntária, equipe multidisciplinar, atendimento 24h e sigilo." />
   <meta name="theme-color" content="#1A3B22" />
   <meta name="author" content="Recomeço à Vitória — Clínicas & Residenciais" />
   <meta name="keywords" content="clínica de recuperação RS, clínica de reabilitação, dependência química, alcoolismo, internação involuntária, internação voluntária, tratamento de drogas, saúde mental, Rio Grande do Sul" />
@@ -264,7 +264,9 @@
             </div>
           </article>
           <article class="member reveal">
-            <div class="member__photo"><img src="assets/equipe-psicologo.webp" alt="Psicólogo da equipe" loading="lazy" width="520" height="520" /></div>
+            <div class="member__photo member__photo--placeholder" role="img" aria-label="Ilustração de psicólogo">
+              <svg viewBox="0 0 64 64" aria-hidden="true"><circle cx="26" cy="22" r="9"/><path d="M10 54c0-9 7-16 16-16s16 7 16 16"/><path d="M40 10h14a3 3 0 0 1 3 3v8a3 3 0 0 1-3 3h-8l-5 4v-4h-1a3 3 0 0 1-3-3v-8a3 3 0 0 1 3-3z"/><path d="M47 14.5c-1.2-1.4-3.4-.6-3.4 1.2 0 1.6 3.4 3.8 3.4 3.8s3.4-2.2 3.4-3.8c0-1.8-2.2-2.6-3.4-1.2z"/></svg>
+            </div>
             <div class="member__body">
               <h3 class="member__name">Psicólogo</h3>
               <p class="member__role">Psicólogo</p>
@@ -568,31 +570,7 @@
           </div>
         </div>
 
-        <article class="parceira parceira--resumo" aria-labelledby="villa-grano-nome">
-          <div class="parceira__destaque">
-            <figure class="parceira__capa">
-              <img src="assets/parceiras/villa-grano/entrada-logo.webp" alt="Placa iluminada da Villa Grano Libertà na fachada da clínica, ao entardecer" loading="lazy" width="936" height="1400" />
-              <figcaption class="parceira__local">
-                <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0z"/><circle cx="12" cy="10" r="3"/></svg>
-                Gentil · RS
-              </figcaption>
-            </figure>
-
-            <div class="parceira__info">
-              <span class="parceira__selo">Centro Terapêutico</span>
-              <h3 class="parceira__nome" id="villa-grano-nome">Villa Grano <em>Libertà</em></h3>
-              <blockquote class="parceira__frase">“Acreditamos que cuidar vai além do diagnóstico.”</blockquote>
-              <p class="parceira__texto">Um acompanhamento construído através da escuta, do acolhimento e de uma abordagem individualizada para cada história, em uma casa cercada de jardins no interior gaúcho.</p>
-
-              <div class="parceira__acoes">
-                <a class="btn parceira__conhecer" href="parceiras.html">
-                  Conhecer a Villa Grano
-                  <svg class="icon" aria-hidden="true" viewBox="0 0 24 24"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
-                </a>
-              </div>
-            </div>
-          </div>
-        </article>
+        <div data-parceiras="resumo"></div>
       </div>
     </section>
 
@@ -793,6 +771,7 @@
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/gsap.min.js" defer></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/ScrollTrigger.min.js" defer></script>
+  <script src="clinicas.js" defer></script>
   <script src="script.js" defer></script>
 </body>
 </html>
